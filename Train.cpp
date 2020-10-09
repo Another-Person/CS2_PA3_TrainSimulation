@@ -1,3 +1,4 @@
+#include <cmath>
 #include "Train.h"
 
 void Train::addStationToRoute(Station& newStation)
@@ -24,7 +25,7 @@ Station Train::getNextStation()
 	}
 }
 
-void Train::setArrivalTime()
+void Train::setArrivalTime(int currentTime)
 {
 	int distance = 0;
 	for (size_t i = 0; i < route.size(); i++)
@@ -42,7 +43,13 @@ void Train::setArrivalTime()
 		}
 			
 	}
-	nextArrivalTime = distance / averageSpeed;
+	double travelTime = static_cast<double>(distance) / averageSpeed;
+	int roundedTravelTime = std::floor(travelTime);
+	if (roundedTravelTime != travelTime)
+	{
+		roundedTravelTime++; // Round up travel time to the nearest minute if it isn't a whole number already
+	}
+	nextArrivalTime =  roundedTravelTime + currentTime;
 }
 
 void Train::setCurrentStation(Station& newStation)

@@ -8,14 +8,15 @@ class Train
 {
 private:
 	int trainNumber;
-	int averageSpeed;
+	double averageSpeed;
 	Station currentStation;
 	int nextArrivalTime;
 	std::vector<Station> route;
+	int countdown;
 
 public:
-	Train(Station& currLoc, int trainNum = 0, int avgSpeed = 0, int arrivalTime = 0, std::vector<Station> newRoute = {}) :
-		trainNumber{ trainNum }, averageSpeed{ avgSpeed }, currentStation{ currLoc }, nextArrivalTime{ arrivalTime }, route{ newRoute }
+	Train(Station& currLoc, int trainNum = 0, double avgSpeed = 0, int arrivalTime = 0, std::vector<Station> newRoute = {}) :
+		trainNumber{ trainNum }, averageSpeed{ avgSpeed }, currentStation{ currLoc }, nextArrivalTime{ arrivalTime }, route{ newRoute }, countdown{ -1 }
 	{
 
 	}
@@ -23,12 +24,17 @@ public:
 	void addStationToRoute(Station& newStation);
 	Station getNextStation();
 
-	void setArrivalTime();
+	void setArrivalTime(int currentTime);
 	int getArrivalTime() { return nextArrivalTime; }
 
 	void setCurrentStation(Station& newStation);
 	Station getCurrentStation() { return currentStation; }
 
+	int getTrainNumber() { return trainNumber; }
+
+	void startCountdown() { countdown = 5; }
+	int getCountdown() { return countdown; }
+	void decrementCountdown() { countdown--; }
 
 	
 };
